@@ -1,0 +1,40 @@
+# ---------------------------------------------------------------------------
+# Gabarit netplan — interface du réseau privé du lab Ansible (172.16.0.0/24).
+#
+# Ce fichier est un GABARIT : il ne doit jamais être déposé tel quel dans
+# /etc/netplan. Le script labs/scripts/10-preparer-vm.sh remplace les trois
+# marqueurs du bloc de configuration ci-dessous par les valeurs réelles de la
+# machine, puis écrit le résultat dans /etc/netplan/99-lab.yaml avec les
+# droits 600, comme l'exige netplan.
+#
+# Détection de l'interface du réseau privé
+#   Aucune valeur n'est figée dans ce gabarit. Avec VirtualBox, l'adaptateur 1
+#   est en NAT et l'adaptateur 2 est relié au réseau privé ; le nom de cette
+#   interface dépend toutefois du matériel hôte (enp0s8, enp1s0, ens18...).
+#   Pour connaître le nom réel des interfaces, exécuter sur la machine :
+#       ip -br -4 addr
+#   Pour imposer une interface, utiliser l'option du script :
+#       ./10-preparer-vm.sh --nom web1 --ip 172.16.0.11 --interface enp0s8
+#
+# Contrat d'adressage du lab (deux machines)
+#   cn-ansible = 172.16.0.10 (control node), web1 = 172.16.0.11 (seul node
+#   managé), préfixe du réseau privé = 24.
+#
+# Route par défaut
+#   Aucune passerelle n'est déclarée ici : la route par défaut et l'accès à
+#   Internet restent fournis par l'interface NAT, qui conserve sa configuration
+#   DHCP (/etc/netplan/01-netcfg.yaml livré par l'installateur Ubuntu Server).
+#   Le lab fonctionne donc indépendamment de l'adresse du poste hôte sur le
+#   réseau privé.
+# ---------------------------------------------------------------------------
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    # Nom de l'interface reliée au réseau privé (deuxième adaptateur de la VM).
+    __INTERFACE_LAB__:
+      dhcp4: false
+      dhcp6: false
+      addresses:
+        # Adresse fixe de la machine et longueur du préfixe du réseau privé.
+        - __ADRESSE_LAB__/__MASQUE_LAB__
