@@ -67,6 +67,10 @@
 
 ### Contenu Théorique (45min)
 
+
+<img width="1672" height="941" alt="image" src="https://github.com/user-attachments/assets/15902114-7c6b-44eb-85ee-a3b19f9292f5" />
+
+
 #### 1. Syntaxe YAML pour les playbooks
 
 **YAML** (*YAML Ain't Markup Language*) est un format de sérialisation de données conçu pour être lisible par un humain. C'est le langage des playbooks, des inventaires (format YAML vu en S2) et des fichiers de variables [1].
